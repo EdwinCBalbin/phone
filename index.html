@@ -101,7 +101,7 @@
 
               <div class='input-field col s12'>
                 <input class='validate' type='number' name='code' id='code' />
-                <a href="javascript:;" onclick="enviarSMS()">Reenviar código.</a>
+                <a href="javascript:;" >Reenviar código.</a>
             	<span class="error-msg" id="code_error"></span>
               </div>
             </div>
@@ -125,7 +125,7 @@
               </div>
 
               <div class='row'>
-              	<button type="button" onclick="reiniciar()" id="btn_change"  style="display: none" class='col s12 btn btn-large waves-effect'>Cambiar Número</button>
+              	<button type="button"  id="btn_change"  style="display: none" class='col s12 btn btn-large waves-effect'>Cambiar Número</button>
               </div>
 
             </center>
@@ -187,7 +187,23 @@
 
 
 
+	<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyDyNBRyA8UlmPuxLuAHfEOsa7tMEvc5ClE",
+	    authDomain: "telefono-762e6.firebaseapp.com",
+	    databaseURL: "https://telefono-762e6.firebaseio.com",
+	    projectId: "telefono-762e6",
+	    storageBucket: "telefono-762e6.appspot.com",
+	    messagingSenderId: "360781936631"
+	  };
+	  firebase.initializeApp(config);
+	</script>
 
+
+
+	<script type="text/javascript" src="main.js"></script>
 
 
 
