@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Autenticacion</title>
+	<!-- CSS -->
+	<link rel="stylesheet" href="./intl-tel-input-master/build/css/intlTelInput.css">
+	<link rel="stylesheet" href="./intl-tel-input-master/build/css/demo.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto;
+    }
+
+    body {
+      background: #fff;
+    }
+
+    .input-field input[type=date]:focus + label,
+    .input-field input[type=text]:focus + label,
+    .input-field input[type=email]:focus + label,
+    .input-field input[type=password]:focus + label {
+      color: #e91e63;
+    }
+
+    .input-field input[type=date]:focus,
+    .input-field input[type=text]:focus,
+    .input-field input[type=email]:focus,
+    .input-field input[type=password]:focus {
+      border-bottom: 2px solid #e91e63;
+      box-shadow: none;
+    }
+
+    
+	#error-msg,.error-msg{
+		color: red;
+		font-weight: bold;
+		padding-top: 10px;
+	}
+	#valid-msg{
+		color: green ;
+		font-weight: bold;
+		padding-top: 10px;
+	}
+
+
+	.intl-tel-input {
+	    width: 100% !important;
+	}
+</style>
+
+
+</head>
+
+
+
+<body>
+  <div class="section"></div>
+  <main>
+    <center>
+      <div class="section"></div>
+
+      <h5 class="indigo-text">Regístrese con su celular.</h5>
+      <div class="section"></div>
+
+      <div class="container">
+        <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+          <form class="col s12" method="post" id="frm-phone" data-proceso="1"> 
+
+
+            <div class='row'>
+              <div class='col s12'>
+              </div>
+            </div>
+
+
+            <div class="row">
+            		<label>Ingrese su número</label>
+
+            	<div class="input-field col s12">
+
+					<input class='validate' id="phone" type="tel" style="width: 77% !important;">
+
+					<span id="valid-msg" class="hide"  style="display: inherit;">✓ Valido.</span>
+					<span id="error-msg" class="hide"  style="display: inherit;">Número invalido.</span>
+            	</div>
+            </div>
+
+
+            <div class='row' id="div-code" style="display: none;">
+
+                <label for='email'>Ingrese código</label>
+
+              <div class='input-field col s12'>
+                <input class='validate' type='number' name='code' id='code' />
+                <a href="javascript:;" onclick="enviarSMS()">Reenviar código.</a>
+            	<span class="error-msg" id="code_error"></span>
+              </div>
+            </div>
+
+
+            <div class="row" id="div-captcha">
+            	
+            	<!-- <label>Rellene Captcha</label>-->
+            	<div class="input-field col s12">
+            		
+					<div id="captha"></div>
+
+            	</div>
+            </div>
+           
+            <br />
+            <center>
+              
+              <div class="row">
+                <button type='submit' id="btn_phone" name='btn_phone' disabled class='col s12 btn btn-large waves-effect indigo'>Enviar SMS</button>
+              </div>
+
+              <div class='row'>
+              	<button type="button" onclick="reiniciar()" id="btn_change"  style="display: none" class='col s12 btn btn-large waves-effect'>Cambiar Número</button>
+              </div>
+
+            </center>
+          </form>
+        </div>
+      </div>
+    
+    </center>
+
+    <div class="section"></div>
+    <div class="section"></div>
+  </main>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+	<!-- Load jQuery from CDN so can run demo immediately
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+	<script src="./intl-tel-input-master/build/js/intlTelInput.js"></script>
+	<script>
+		
+		var telInput = $("#phone"),
+		errorMsg = $("#error-msg"),
+		validMsg = $("#valid-msg");
+
+		// initialise plugin
+		telInput.intlTelInput({
+		utilsScript: "./intl-tel-input-master/build/js/utils.js"
+		});
+
+		var reset = function() {
+		telInput.removeClass("error");
+		errorMsg.addClass("hide");
+		validMsg.addClass("hide");
+		};
+
+		// on blur: validate
+		telInput.blur(function() {
+		reset();
+		if ($.trim(telInput.val())) {
+		if (telInput.intlTelInput("isValidNumber")) {
+			console.log('1');
+			$("#btn_phone").attr('disabled',false)
+		  validMsg.removeClass("hide");
+		} else {
+			console.log('2');
+		  $("#btn_phone").attr('disabled',true);
+		  telInput.addClass("error");
+		  errorMsg.removeClass("hide");
+		}
+		}
+		});
+
+		// on keyup / change flag: reset
+		telInput.on("keyup change", reset);
+
+
+
+	</script>
+
+
+
+
+
+
+	<script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyDyNBRyA8UlmPuxLuAHfEOsa7tMEvc5ClE",
+	    authDomain: "telefono-762e6.firebaseapp.com",
+	    databaseURL: "https://telefono-762e6.firebaseio.com",
+	    projectId: "telefono-762e6",
+	    storageBucket: "telefono-762e6.appspot.com",
+	    messagingSenderId: "360781936631"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+
+
+	<!-- Mi codigo JS -->
+	<script type="text/javascript" src="./scripts.js"></script>
+
+
+</body>
+
+
+
+</body>
+</html>
